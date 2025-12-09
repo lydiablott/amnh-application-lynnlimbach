@@ -11,16 +11,22 @@ import "./App.css";
 
 function App() {
   return (
-    <BrowserRouter basename={import.meta.env.BASE_URL}>
+    <BrowserRouter basename="/amnh-application-lynnlimbach">
       <Header />
       <main>
         <Routes>
+
+          {/* MAIN HOME ROUTES */}
           <Route path="/" element={<Home />} />
+          <Route path="/amnh-application-lynnlimbach" element={<Home />} />
+
+          {/* NORMAL ROUTES */}
           <Route path="/trilobite" element={<Trilobite />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/cv" element={<CV />} />
           <Route path="/coverletter" element={<Coverletter />} />
           <Route path="/impressum" element={<Impressum />} />
+
         </Routes>
       </main>
       <Footer />

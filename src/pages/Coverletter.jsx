@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 
 function Coverletter() {
+  const base = import.meta.env.BASE_URL;
+
   useEffect(() => {
     document.body.classList.add("page-pdf");
     return () => {
@@ -13,7 +15,7 @@ function Coverletter() {
       <section className="pdf-section">
         <div className="pdf-container">
           <iframe
-            src="/Coverletter_Lynn_Limbach.pdf"
+            src={base + "Coverletter_Lynn_Limbach.pdf"}
             width="100%"
             title="PDF Preview"
             style={{ border: "none" }}
