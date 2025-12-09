@@ -8,12 +8,9 @@ import { EXRLoader } from "three/examples/jsm/loaders/EXRLoader.js";
 export default function TrilobiteViewer() {
   const mountRef = useRef(null);
 
-  // === Release URLs ===
-  const MODEL_URL =
-    "https://github.com/lydiablott/amnh-application-lynnlimbach/releases/download/v1.0/AMNHbackup.glb";
-
-  const HDRI_URL =
-    "https://github.com/lydiablott/amnh-application-lynnlimbach/releases/download/v1.0/hall_of_mammals_4k.exr";
+  // === Lokale Pfade (public/assets) ===
+  const MODEL_URL = "/assets/AMNHbackup.glb";
+  const HDRI_URL = "/assets/hall_of_mammals_4k.exr";
 
   useEffect(() => {
     if (!mountRef.current) return;
