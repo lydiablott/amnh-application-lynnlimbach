@@ -8,10 +8,8 @@ import { EXRLoader } from "three/examples/jsm/loaders/EXRLoader.js";
 export default function TrilobiteViewer() {
   const mountRef = useRef(null);
 
- 
   const MODEL_URL = import.meta.env.BASE_URL + "assets/AMNHbackup.glb";
-  const HDRI_URL  = import.meta.env.BASE_URL + "assets/hall_of_mammals_4k.exr";
-
+  const HDRI_URL = import.meta.env.BASE_URL + "assets/hall_of_mammals_4k.exr";
 
   useEffect(() => {
     if (!mountRef.current) return;
@@ -35,14 +33,16 @@ export default function TrilobiteViewer() {
     renderer.setSize(width, height);
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setClearColor(0x000000, 1);
-    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+
+    // Tone Mapping – für Debug: auf NoToneMapping setzen
+    renderer.toneMapping = THREE.NoToneMapping;
     renderer.outputColorSpace = THREE.SRGBColorSpace;
 
     mountRef.current.appendChild(renderer.domElement);
 
     // === Lighting ===
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
-    const dirLight = new THREE.DirectionalLight(0xffffff, 0.4);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.25);
+    const dirLight = new THREE.DirectionalLight(0xffffff, 0.5);
     dirLight.position.set(5, 5, -10);
     scene.add(ambientLight, dirLight);
 
@@ -64,6 +64,7 @@ export default function TrilobiteViewer() {
     controls.enableZoom = false;
     controls.enablePan = false;
 
+    // Nur horizontal drehen
     controls.minPolarAngle = Math.PI / 2;
     controls.maxPolarAngle = Math.PI / 2;
 
@@ -85,6 +86,32 @@ export default function TrilobiteViewer() {
 
         trilobite.position.set(0, 3.6, 0);
         trilobite.scale.set(0.22, 0.22, 0.22);
+
+        // WICHTIGER TEIL:
+        // Alle Mesh-Materialien bereinigen:
+        // - Vertex Colors AUS
+        // - Texturen auf sRGB setzen
+        // - EnvMap-Intensität moderat halten
+        trilobite.traverse((child) => {
+          if (child.isMesh && child.material) {
+            const mat = child.material;
+
+            // Falls glTF Vertex Colors benutzt: deaktivieren
+            if (mat.vertexColors) {
+              mat.vertexColors = false;
+            }
+
+            // Falls es eine Base-Color-Map gibt: sicherstellen, dass sie sRGB ist
+            if (mat.map) {
+              mat.map.colorSpace = THREE.SRGBColorSpace;
+              mat.map.needsUpdate = true;
+            }
+
+            // Normalmap / Roughness bleiben wie sie sind, aber:
+            mat.envMapIntensity = 0.6;
+            mat.needsUpdate = true;
+          }
+        });
       },
       undefined,
       (error) => console.error("Error loading model:", error)
