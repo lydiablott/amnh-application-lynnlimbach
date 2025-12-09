@@ -8,10 +8,17 @@ import { EXRLoader } from "three/examples/jsm/loaders/EXRLoader.js";
 export default function TrilobiteViewer() {
   const mountRef = useRef(null);
 
+  // === Release URLs ===
+  const MODEL_URL =
+    "https://github.com/lydiablott/amnh-application-lynnlimbach/releases/download/v1.0/AMNHbackup.glb";
+
+  const HDRI_URL =
+    "https://github.com/lydiablott/amnh-application-lynnlimbach/releases/download/v1.0/hall_of_mammals_4k.exr";
+
   useEffect(() => {
     if (!mountRef.current) return;
 
-    // Canvas aufräumen
+    // Canvas cleanup
     while (mountRef.current.firstChild) {
       mountRef.current.removeChild(mountRef.current.firstChild);
     }
@@ -19,7 +26,7 @@ export default function TrilobiteViewer() {
     const width = mountRef.current.clientWidth;
     const height = mountRef.current.clientHeight;
 
-    // ===== Szene, Kamera, Renderer =====
+    // === Scene, Camera, Renderer ===
     const scene = new THREE.Scene();
 
     const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
@@ -35,20 +42,26 @@ export default function TrilobiteViewer() {
 
     mountRef.current.appendChild(renderer.domElement);
 
-    // ===== Licht =====
+    // === Lighting ===
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
     const dirLight = new THREE.DirectionalLight(0xffffff, 0.4);
     dirLight.position.set(5, 5, -10);
     scene.add(ambientLight, dirLight);
 
-    // ===== HDRI Umgebung =====
-    new EXRLoader().load("/assets/hall_of_mammals_4k.exr", (tex) => {
-      tex.mapping = THREE.EquirectangularReflectionMapping;
-      scene.environment = tex;
-      scene.background = tex;
-    });
+    // === HDRI Environment (EXR) ===
+    const exrLoader = new EXRLoader();
+    exrLoader.load(
+      HDRI_URL,
+      (tex) => {
+        tex.mapping = THREE.EquirectangularReflectionMapping;
+        scene.environment = tex;
+        scene.background = tex;
+      },
+      undefined,
+      (err) => console.error("Error loading EXR:", err)
+    );
 
-    // ===== Controls =====
+    // === Camera Controls ===
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableZoom = false;
     controls.enablePan = false;
@@ -64,10 +77,10 @@ export default function TrilobiteViewer() {
     controls.target.set(0, 0, 0);
     controls.update();
 
-    // ===== Modell =====
+    // === Load GLB Model ===
     const loader = new GLTFLoader();
     loader.load(
-      "/assets/AMNHbackup.glb",
+      MODEL_URL,
       (gltf) => {
         const trilobite = gltf.scene;
         scene.add(trilobite);
@@ -79,7 +92,7 @@ export default function TrilobiteViewer() {
       (error) => console.error("Error loading model:", error)
     );
 
-    // ===== Animation =====
+    // === Animation Loop ===
     function animate() {
       requestAnimationFrame(animate);
       controls.update();
@@ -87,7 +100,7 @@ export default function TrilobiteViewer() {
     }
     animate();
 
-    // ===== Resize =====
+    // === Handle Resize ===
     const handleResize = () => {
       if (!mountRef.current) return;
       const newWidth = mountRef.current.clientWidth;
@@ -98,7 +111,7 @@ export default function TrilobiteViewer() {
     };
     window.addEventListener("resize", handleResize);
 
-    // Cleanup
+    // Cleanup on unmount
     return () => {
       window.removeEventListener("resize", handleResize);
       if (
