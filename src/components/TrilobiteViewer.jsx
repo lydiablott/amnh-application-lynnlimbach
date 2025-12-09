@@ -8,9 +8,10 @@ import { EXRLoader } from "three/examples/jsm/loaders/EXRLoader.js";
 export default function TrilobiteViewer() {
   const mountRef = useRef(null);
 
-  // === Lokale Pfade (public/assets) ===
-  const MODEL_URL = "/assets/AMNHbackup.glb";
-  const HDRI_URL = "/assets/hall_of_mammals_4k.exr";
+ 
+  const MODEL_URL = import.meta.env.BASE_URL + "assets/AMNHbackup.glb";
+  const HDRI_URL  = import.meta.env.BASE_URL + "assets/hall_of_mammals_4k.exr";
+
 
   useEffect(() => {
     if (!mountRef.current) return;
