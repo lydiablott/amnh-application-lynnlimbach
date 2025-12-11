@@ -171,10 +171,10 @@ function Home() {
 
           <p className="trilobite-content-text">
             Beyond all the elements connected to this small trilobite experiment, I enjoy and also experienced working across
-            several areas of media production from storytelling, video and audio (incuding Higher Order Ambisonics) to drawing, fabrication and several kinds of media including interesting hardware (Arduino/sensors/LED, VR/AR systems, tracking setups, chroma key).
+            several areas of media production from storytelling, video and audio (including Higher Order Ambisonics) to drawing, fabrication and several kinds of media including interesting hardware (Arduino/sensors/LED, VR/AR systems, tracking setups, chroma key).
           </p>
     <p className="trilobite-content-text">
-      Having grown up visiting (natural history) museums and being a big natural sciences fan myself, appreciating the education and unique information found there and watching them becoming more and more digital and full of technology, I can't think of a better place to combine my passions and contribute to. 
+      Having grown up visiting (natural history) museums and being a big natural sciences fan myself, appreciating the education and unique information found there and watching them become more and more digital and full of technology, I can't think of a better place to combine my passions and contribute to. 
     </p>
         </div>
       </section>
