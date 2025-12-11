@@ -1,8 +1,6 @@
-// src/pages/Impressum.tsx (oder .jsx)
 import { useEffect } from "react";
 
 function Impressum() {
-  // analog zu page-pdf: Body-Klasse setzen/entfernen
   useEffect(() => {
     document.body.classList.add("page-impressum");
     return () => {

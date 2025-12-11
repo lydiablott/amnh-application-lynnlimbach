@@ -2,9 +2,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
-import Trilobite from "./pages/Trilobite";
 import Contact from "./pages/Contact";
-import CV from "./pages/CV";
+import Resume from "./pages/Resume";
 import Coverletter from "./pages/Coverletter";
 import Impressum from "./pages/Impressum";
 import "./App.css";
@@ -12,24 +11,18 @@ import "./App.css";
 function App() {
   return (
     <BrowserRouter basename="/amnh-application-lynnlimbach">
-      <Header />
-      <main>
+      <div className="App">
+        <Header />
         <Routes>
-
-          {/* MAIN HOME ROUTES */}
           <Route path="/" element={<Home />} />
           <Route path="/amnh-application-lynnlimbach" element={<Home />} />
-
-          {/* NORMAL ROUTES */}
-          <Route path="/trilobite" element={<Trilobite />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/cv" element={<CV />} />
+          <Route path="/Resume" element={<Resume />} />
           <Route path="/coverletter" element={<Coverletter />} />
           <Route path="/impressum" element={<Impressum />} />
-
         </Routes>
-      </main>
-      <Footer />
+        <Footer />
+      </div>
     </BrowserRouter>
   );
 }

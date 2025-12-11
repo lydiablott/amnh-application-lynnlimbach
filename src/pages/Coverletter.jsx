@@ -15,11 +15,11 @@ function Coverletter() {
       <section className="pdf-section">
         <div className="pdf-container">
           <iframe
-            src={base + "Coverletter_Lynn_Limbach.pdf"}
+            src={base + "Lynn_Limbach_Internship_Application_Coverletter.pdf"}
             width="100%"
             title="PDF Preview"
             style={{ border: "none" }}
-          ></iframe>
+          />
         </div>
       </section>
     </main>
