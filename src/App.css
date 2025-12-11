@@ -895,3 +895,17 @@ body.page-pdf .pdf-container iframe {
     padding: 0;
   }
 }
+
+  /* NEU: Content auf Handy nicht einquetschen */
+  .trilobite-content {
+    padding: 40px 20px;
+  }
+
+  .trilobite-content-inner {
+    max-width: 100%;
+  }
+
+  .trilobite-content-title {
+    font-size: 2.2rem;
+    margin-bottom: 40px;
+  }
